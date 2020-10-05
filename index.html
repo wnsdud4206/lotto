@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <title>Lotto</title>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+      <h1>LOTTO 번호 생성기</h1>
+      <button id="btn">생성하기</button>
+      <p id="num_show">
+        <span></span><br />
+        <span></span><br />
+        <span></span><br />
+        <span></span><br />
+        <span></span><br />
+        <span></span><br />
+        <span></span>
+      </p>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+
+      var btn = document.getElementById("btn"),
+        ns = document.getElementById("num_show"),
+        ns_span = document.querySelectorAll("#num_show > span");
+
+      btn.addEventListener("click", lotto_numbers);
+      function lotto_numbers(event) {
+
+        let i,
+          numbers = [],
+          num = [],
+          bonus = [];
+
+        // function random() {
+        //   ran = Math.ceil(Math.random() * 45);
+        // }
+        // random();
+
+        // 확률 조정 필요..., ,pop(), https://im-developer.tistory.com/103
+        for (i = 0; i < 45; i++) {
+          numbers.push(i+1);
+        }
+
+        for (i = 0; i < 7; i++) {
+          num.push(numbers.splice(Math.floor(Math.random() * 45 - i), 1));
+        }
+
+        bonus.push(num.pop());
+        num.sort(function(a, b) {
+          return a - b;
+        });
+        num.push(bonus[0]);
+
+
+        console.log(num + " | " + numbers + " | " + bonus);
+
+        // function bonus_num() {
+        //
+        //   ran = Math.ceil(Math.random() * 45);
+        //
+        //   if (num[0] == ran || num[1] == ran || num[2] == ran || num[3] == ran || num[4] == ran || num[5] == ran) {
+        //
+        //     console.log("false");
+        //     bonus_num();
+        //
+        //   } else {
+        //
+        //     console.log("good");
+        //     num.push(ran);
+        //
+        //   }
+        // }
+        // bonus_num();
+
+        var index = [1, 2, 3, 4, 5, 6, "Bonus"],
+          col;
+        for (i = 0; i < 7; i++) {
+          if (num[i] < 11) {
+            col = "#fbc400";
+          } else if (num[i] < 21) {
+            col = "#69c8f2";
+          } else if (num[i] < 31) {
+            col = "#ff7272";
+          } else if (num[i] < 41) {
+            col = "#aaa";
+          } else {
+            col = "#b0d840";
+          }
+
+          ns_span[i].innerHTML = `${index[i]} : <strong style="color: ${col};">${num[i]}</strong>`;
+        }
+
+        // console.log(num);
+        // ns.innerHTML = `1 : <strong>${num[0]}</strong>, 2 : <strong>${num[1]}</strong>, 3 : <strong>${num[2]}</strong>, 4 : <strong>${num[3]}</strong>, 5 : <strong>${num[4]}</strong>, 6 : <strong>${num[5]}</strong>, Bonus : <strong>${num[6]}</strong>`;
+
+      }
+      // lotto_numbers();
+
+
+    </script>
+
+  </body>
+</html>
